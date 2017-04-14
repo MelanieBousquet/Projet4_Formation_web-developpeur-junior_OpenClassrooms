@@ -18,16 +18,8 @@ ebook_blog_adminpage:
     defaults: { _controller: EbookBlogBundle:Admin:index }
 
 ebook_blog_chapters:
-    path:     /admin/chapters
+    path:     /admin/chapters/{state}
     defaults: { _controller: EbookBlogBundle:Admin:viewChapters}
-
-ebook_blog_chapters_published:
-    path:     /admin/published-chapters
-    defaults: { _controller: EbookBlogBundle:Admin:viewPublishedChapters}
-
-ebook_blog_chapters_unpublished:
-    path:     /admin/unpublished-chapters
-    defaults: { _controller: EbookBlogBundle:Admin:viewUnpublishedChapters}
 
 ebook_blog_chapter_add:
     path:     /admin/chapter/add
@@ -48,12 +40,8 @@ ebook_blog_chapter_delete:
         id: \d+
 
 ebook_blog_comments:
-    path:     /admin/comments
+    path:     /admin/comments/{state}
     defaults: { _controller: EbookBlogBundle:Admin:viewComments }
-
-ebook_blog_comments_unpublished:
-    path:     /admin/unpublished-comments
-    defaults: { _controller: EbookBlogBundle:Admin:viewUnpublishedComments }
 
 ebook_blog_comment_accept:
     path:     /admin/comment/{id}/accept

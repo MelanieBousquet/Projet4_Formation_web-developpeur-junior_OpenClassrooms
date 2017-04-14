@@ -14,51 +14,38 @@ class AdminController extends Controller
         return $this->render('EbookBlogBundle:Admin:index.html.twig');
     }
 
-    public function viewChaptersAction()
+    public function viewChaptersAction(state)
     {
         $repository = $this
             ->getDoctrine()
             ->getManager()
             ->getRepository('EbookBlogBundle:Chapter');
 
-        $listChapters = $repository->findAll();
+        switch (state) {
 
-       return $this->render('EbookBlogBundle:Admin:view-chapters.html.twig', array(
-           'listChapters' => $listChapters
-       ));
+            case null :
+                $listChapters = $repository->findAll();
+                break;
+
+            case 1 :
+                $listChapters = $repository->findBy(
+                    array('published' => 1)
+                );
+                break;
+
+            case 0 :
+
+                $listChapters = $repository->findBy(
+                    array('published' => 0)
+                );
+                break;
+
+        }
+        return $this->render('EbookBlogBundle:Admin:view-chapters.html.twig', array(
+            'listChapters' => $listChapters
+            ));
     }
 
-    public function viewPublishedChaptersAction()
-    {
-        $repository = $this
-            ->getDoctrine()
-            ->getManager()
-            ->getRepository('EbookBlogBundle:Chapter');
-
-        $listPublishedChapters = $repository->findBy(
-            array('published' => 1)
-        );
-
-       return $this->render('EbookBlogBundle:Admin:view-chapters.html.twig', array(
-           'listPublishedChapters' => $listPublishedChapters
-       ));
-    }
-
-    public function viewUnpublishedChaptersAction()
-    {
-         $repository = $this
-            ->getDoctrine()
-            ->getManager()
-            ->getRepository('EbookBlogBundle:Chapter');
-
-        $listUnpublishedChapters = $repository->findBy(
-            array('published' => 0)
-        );
-
-       return $this->render('EbookBlogBundle:Admin:view-chapters.html.twig', array(
-           'listUnpublishedChapters' => $listUnpublishedChapters
-       ));
-    }
 
     public function addChapterAction(Request $request)
     {
@@ -94,36 +81,27 @@ class AdminController extends Controller
         return $this->redirectToRoute('ebook_blog_homepage');
     }
 
-    public function viewCommentsAction()
-    {
-         $repository = $this
-            ->getDoctrine()
-            ->getManager()
-            ->getRepository('EbookBlogBundle:Comment');
-
-        $listComments = $repository->findAll();
-
-       return $this->render('EbookBlogBundle:Admin:view-comments.html.twig', array(
-           'listComments' => $listComments
-       ));
-    }
-
-    public function viewUnpublishedCommentsAction()
+    public function viewCommentsAction(state)
     {
         $repository = $this
             ->getDoctrine()
             ->getManager()
             ->getRepository('EbookBlogBundle:Comment');
 
-        $listUnpublishedComments = $repository->findBy(
-            array('published' => 0)
+        if (state == 0) {
+            $listComments = $repository->findBy(
+                array('published' => 0)
         );
 
-       return $this->render('EbookBlogBundle:Admin:view-comments.html.twig', array(
-           'listUnpublishedComments' => $listUnpublishedComments
-       ));
+        } else {
+            $listComments = $repository->findAll();
+        }
 
+       return $this->render('EbookBlogBundle:Admin:view-comments.html.twig', array(
+           'listComments' => $listComments
+       ));
     }
+
 
     public function acceptCommentAction($id, Request $request) {
 
