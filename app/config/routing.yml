@@ -1,0 +1,4 @@
+ebook_blog:
+    resource: "@EbookBlogBundle/Resources/config/routing.yml"
+    prefix:   /
+

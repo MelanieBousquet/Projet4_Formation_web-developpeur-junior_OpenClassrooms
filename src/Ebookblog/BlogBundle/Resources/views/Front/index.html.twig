@@ -1,0 +1,36 @@
+
+
+{% extends "EbookBlogBundle:Front:layout.html.twig" %}
+
+{% block title %}{{ parent() }} Accueil -{% endblock %}
+
+{% block header %}
+    <header class="intro-header" style="background-image: url( {{asset('img/home-bg.jpg')}})">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="site-heading">
+                        <h1>Billet simple pour l'Alaska</h1>
+                        <hr class="small">
+                        <span class="subheading">Retrouvez en ligne chapitre par chapitre le nouveau livre de Jean Forteroche</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+{% endblock %}
+
+{% block body %}
+{% for chapter in listChapters %}
+<div class="post-preview">
+    <a href="{{ path('ebook_blog_view', {'id': chapter.id})}}">
+        <h2 class="post-title">{{ chapter.title }}</h2>
+        <h3 class="post-subtitle">{{ chapter.subtitle }} </h3>
+    </a>
+    <p class="post-meta">Par Jean Forteroche, le {{ chapter.date|date('d/m/Y') }}</p>
+</div>
+    {% else %}
+      <div>Pas (encore !) de chapitres</div>
+    {% endfor %}
+<hr>
+{% endblock %}
