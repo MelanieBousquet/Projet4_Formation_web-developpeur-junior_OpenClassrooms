@@ -24,6 +24,7 @@
         "symfony/swiftmailer-bundle": "^2.3.10",
         "symfony/symfony": "3.2.*",
         "twig/twig": "^1.0||^2.0",
+        "twig/extensions": "~1.4",
         "symfony/twig-bridge": "~2.8|3.0.*",
         "symfony/asset": "~2.8|3.0.*"
     },

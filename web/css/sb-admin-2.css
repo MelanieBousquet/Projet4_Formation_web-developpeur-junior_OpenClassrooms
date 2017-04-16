@@ -402,6 +402,20 @@ table.dataTable thead .sorting:after {
 .timeline-body > p + p {
   margin-top: 5px;
 }
+
+.chapitreTitle:hover, .articleTitle:focus {
+    text-decoration: none;
+}
+
+.chapitreTable {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#errorPanel {
+    padding-top: 30px;
+    padding-bottom: 10px;
+}
 @media (max-width: 767px) {
   ul.timeline:before {
     left: 40px;
