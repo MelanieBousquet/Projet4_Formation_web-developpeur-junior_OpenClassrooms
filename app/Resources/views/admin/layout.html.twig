@@ -75,26 +75,26 @@
                             <a href="{{ path('ebook_blog_adminpage') }}"><i class="fa fa-dashboard fa-fw"></i>Panneau d'administration</a>
                         </li>
                         <li>
-                            <a href="{{ path('ebook_blog_comments') }}"><i class="fa fa-bar-chart-o fa-fw"></i>Commentaires<span class="fa arrow"></span></a>
+                            <a href="{{ path('ebook_blog_comments', {'state': 'all'}) }}"><i class="fa fa-bar-chart-o fa-fw"></i>Commentaires<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="{{ path('ebook_blog_comments_unpublished') }}">En attente de modération</a>
+                                    <a href="{{ path('ebook_blog_comments', {'state': 'unpublished'}) }}">En attente de modération</a>
                                 </li>
                                 <li>
-                                    <a href="{{ path('ebook_blog_comments') }}">Tous les commentaires</a>
+                                    <a href="{{ path('ebook_blog_comments', {'state': 'all'}) }}">Tous les commentaires</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
 
                         <li>
-                            <a href="{{ path('ebook_blog_chapters')}}"><i class="fa fa-wrench fa-fw"></i>Chapitres<span class="fa arrow"></span></a>
+                            <a href="{{ path('ebook_blog_chapters', {'state': 'published'})}}"><i class="fa fa-wrench fa-fw"></i>Chapitres<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="{{ path('ebook_blog_chapters_published')}}">Publiés</a>
+                                    <a href="{{ path('ebook_blog_chapters', {'state': 'published'})}}">Publiés</a>
                                 </li>
                                 <li>
-                                    <a href="{{ path('ebook_blog_chapters_unpublished')}}">Brouillons</a>
+                                    <a href="{{ path('ebook_blog_chapters', {'state': 'unpublished'})}}">Brouillons</a>
                                 </li>
                                 <li>
                                     <a href="{{ path('ebook_blog_chapter_add')}}">Ajouter un chapitre</a>

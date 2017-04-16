@@ -1,26 +1,19 @@
 <?php
 
-namespace Ebookblog\BlogBundle\Controller;
+namespace Ebookblog\BlogBundle\Controller\Front;
 
+use Ebookblog\BlogBundle\Entity\Chapter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
-class FrontController extends Controller {
+class ChapterController extends Controller {
 
-    public function indexAction() {
-        $repository = $this
-            ->getDoctrine()
-            ->getManager()
-            ->getRepository('EbookBlogBundle:Chapter');
-
-        $listChapters = $repository->findAll();
-
-        return $this->render('EbookBlogBundle:Front:index.html.twig', array(
-            'listChapters' => $listChapters
-        ));
-    }
-
+    /**
+    * @Route("/chapter/{id}", name="ebook_blog_view", requirements={"id": "\d+"})
+    */
     public function viewAction($id) {
 
         // Si la requête est en POST, c'est que le visiteur a soumis le formulaire pour ajouter un commentaire
@@ -40,13 +33,8 @@ class FrontController extends Controller {
         $chapter = $repository->find($id);
 
         // Si on est pas en POST, alors on affiche le formulaire
-        return $this->render('EbookBlogBundle:Front:view.html.twig', array (
+        return $this->render('front/chapter/view.html.twig', array (
             'chapter' => $chapter,
         ));
-    }
-
-    public function loginAction() {
-
-        return $this->render('EbookBlogBundle:Front:login.html.twig');
     }
 }

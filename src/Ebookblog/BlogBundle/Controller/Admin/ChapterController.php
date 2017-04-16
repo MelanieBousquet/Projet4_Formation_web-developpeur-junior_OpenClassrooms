@@ -1,53 +1,55 @@
 <?php
 
-namespace Ebookblog\BlogBundle\Controller;
+namespace Ebookblog\BlogBundle\Controller\Admin;
 
 use Ebookblog\BlogBundle\Entity\Chapter;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
-class AdminController extends Controller
+class ChapterController extends Controller
 {
-    public function indexAction() {
-
-        return $this->render('EbookBlogBundle:Admin:index.html.twig');
-    }
-
-    public function viewChaptersAction(state)
+    /**
+    * @Route("/admin/chapters/{state}", name="ebook_blog_chapters")
+    */
+    public function viewAction($state)
     {
         $repository = $this
             ->getDoctrine()
             ->getManager()
             ->getRepository('EbookBlogBundle:Chapter');
 
-        switch (state) {
+        switch ($state) {
 
-            case null :
+            case "all" :
                 $listChapters = $repository->findAll();
                 break;
 
-            case 1 :
+            case "published" :
                 $listChapters = $repository->findBy(
                     array('published' => 1)
                 );
                 break;
 
-            case 0 :
+            case "unpublished" :
 
                 $listChapters = $repository->findBy(
                     array('published' => 0)
                 );
                 break;
 
-        }
-        return $this->render('EbookBlogBundle:Admin:view-chapters.html.twig', array(
+        };
+        return $this->render('admin/chapters/view.html.twig', array(
             'listChapters' => $listChapters
             ));
     }
 
-
-    public function addChapterAction(Request $request)
+    /**
+    * @Route("/admin/chapter/add", name="ebook_blog_chapter_add")
+    */
+    public function addAction(Request $request)
     {
 
         $session = $request->getSession();
@@ -62,7 +64,10 @@ class AdminController extends Controller
         return $this->redirectToRoute('ebook_blog_adminpage');
     }
 
-    public function editChapterAction($id, Request $request)
+    /**
+    * @Route("/admin/chapter/{id}/edit", name="ebook_blog_chapter_edit", requirements={"id": "\d+"})
+    */
+    public function editAction($id, Request $request)
     {
 
         $session = $request->getSession();
@@ -72,51 +77,14 @@ class AdminController extends Controller
         return $this->redirectToRoute('ebook_blog_adminpage');
     }
 
-    public function deleteChapterAction($id, Request $request) {
+    /**
+    * @Route("/admin/chapter/{id}/delete", name="ebook_blog_chapter_delete", requirements={"id": "\d+"})
+    */
+    public function deleteAction($id, Request $request) {
 
         $session = $request->getSession();
 
         $session->getFlashBag()->add('info', 'Chapitre bien supprimé');
-
-        return $this->redirectToRoute('ebook_blog_homepage');
-    }
-
-    public function viewCommentsAction(state)
-    {
-        $repository = $this
-            ->getDoctrine()
-            ->getManager()
-            ->getRepository('EbookBlogBundle:Comment');
-
-        if (state == 0) {
-            $listComments = $repository->findBy(
-                array('published' => 0)
-        );
-
-        } else {
-            $listComments = $repository->findAll();
-        }
-
-       return $this->render('EbookBlogBundle:Admin:view-comments.html.twig', array(
-           'listComments' => $listComments
-       ));
-    }
-
-
-    public function acceptCommentAction($id, Request $request) {
-
-        $session = $request->getSession();
-
-        $session->getFlashBag()->add('info', 'Commentaire publié');
-
-        return $this->redirectToRoute('ebook_blog_homepage');
-    }
-
-    public function deleteCommentAction($id, Request $request) {
-
-        $session = $request->getSession();
-
-        $session->getFlashBag()->add('info, Commentaire supprimé');
 
         return $this->redirectToRoute('ebook_blog_homepage');
     }
