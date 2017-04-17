@@ -23,18 +23,51 @@
     {% block body %}
     <!-- Post Content -->
     <article>
-         {{ chapter.content }}
-         <h2>Commentaires</h2>
-         {% for comment in comments %}
-<div class="post-preview">
+        {{ chapter.content }}
 
-        <h3 class="post-title">{{ comment.author }}, le
-        {{ comment.date|date('d/m/Y') }} </h3>
-    <p class="post-meta"> {{ comment.content }}</p>
-</div>
-    {% else %}
-      <div>Pas de commentaires</div>
-    {% endfor %}
+        {% if comments %}
+             <h2>Commentaires</h2>
+             {% for comment in comments %}
+                <div class="post-preview">
+                    <h3 class="post-title">{{ comment.author }}, le {{ comment.date|date('d/m/Y') }} </h3>
+                    <p class="post-meta"> {{ comment.content }}</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div>Pas de commentaires</div>
+        {% endif %}
+
+
+        <h3>Ajouter un commentaire</h3>
+            {% if form %}
+                {{ form_start(form) }}
+                <div class="form-group">
+                    {{ form_errors(form.author) }}
+                    {{ form_widget(form.author, { 'attr':  {
+                        'rows': '4',
+                        'class': 'form-control',
+                        'placeholder': 'Votre pseudo'
+                    }}) }}
+                </div>
+                <div class="form-group">
+                    {{ form_errors(form.content) }}
+                    {{ form_widget(form.content, { 'attr':  {
+                        'rows': '4',
+                        'class': 'form-control',
+                        'placeholder': 'Ecrivez votre commentaire'
+                    }}) }}
+                </div>
+
+
+                  {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
+                {{ form_end(form) }}
+                {% for flashMessage in app.session.flashbag.get('success') %}
+                    <div class="alert alert-success">
+                        {{ flashMessage }}
+                    </div>
+                {% endfor %}
+            {% else %}
+            {% endif %}
     </article>
 
     {% endblock %}

@@ -4,6 +4,7 @@ namespace Ebookblog\BlogBundle\Controller\Front;
 
 use Ebookblog\BlogBundle\Entity\Chapter;
 use Ebookblog\BlogBundle\Entity\Comment;
+use Ebookblog\BlogBundle\Form\CommentType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,17 +16,7 @@ class ChapterController extends Controller {
     /**
     * @Route("/chapter/{id}", name="ebook_blog_view", requirements={"id": "\d+"})
     */
-    public function viewAction($id) {
-
-        // Si la requête est en POST, c'est que le visiteur a soumis le formulaire pour ajouter un commentaire
-       /* if ($request->isMethod('POST')) {
-
-            $resquest->getSession()->getFlashbag()->add('Info', 'Commentaire bien enregistré, en attente de modération');
-
-            // On redirige vers la page de visualisation du chapitre et de ses commentaires
-            return $this->redirectToRoute('ebook_blog_view', array('id' => $id));
-        } */
-
+    public function viewAction($id, Request $request) {
         $em = $this->getDoctrine()->getManager();
 
         $chapter = $em
@@ -43,10 +34,25 @@ class ChapterController extends Controller {
             array('chapter' => $id, 'published' => 1)
         );
 
+        $form = $this->get('form.factory')->create(CommentType::class);
+
+        if ($request->isMethod('POST') && $form-> handleRequest($request)->isValid()) {
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($comment);
+            $em->flush();
+
+            $resquest->getSession()->getFlashbag()->add('info', 'Commentaire bien enregistré, en attente de modération');
+
+            return $this->redirectToRoute('ebook_blog_view', array('id' => $id));
+        }
+
         // Si on est pas en POST, alors on affiche le formulaire
         return $this->render('front/chapter/view.html.twig', array (
+            'form' => $form->createView(),
             'chapter' => $chapter,
-            'comments' => $comments
+            'comments' => $comments,
+
         ));
     }
 
