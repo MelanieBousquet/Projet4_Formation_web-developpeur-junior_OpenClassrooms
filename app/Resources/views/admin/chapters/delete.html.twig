@@ -1,0 +1,24 @@
+{% extends "admin/layout.html.twig" %}
+
+{% block body %}
+
+<div id="page-wrapper">
+
+  <h2>Supprimer un chapitre</h2>
+
+  <p>
+    Etes-vous certain de vouloir supprimer le chapitre "{{ chapter.title }}, {{ chapter.subtitle }}" ?
+  </p>
+
+  <form action="{{ path('ebook_blog_chapter_delete', {'id': chapter.id}) }}" method="post">
+    <a href="{{ path('ebook_blog_chapters', { 'state': 'all' }) }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-chevron-left"></i>
+      Retour à la liste des chapitres
+    </a>
+    <input type="submit" value="Supprimer" class="btn btn-danger" />
+    {# Ceci va générer le champ CSRF #}
+    {{ form_rest(form) }}
+  </form>
+
+</div>
+{% endblock %}

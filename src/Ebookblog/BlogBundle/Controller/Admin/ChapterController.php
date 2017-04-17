@@ -3,11 +3,14 @@
 namespace Ebookblog\BlogBundle\Controller\Admin;
 
 use Ebookblog\BlogBundle\Entity\Chapter;
+use Ebookblog\BlogBundle\Form\ChapterType;
+use Ebookblog\BlogBundle\Form\ChapterEditType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+
 
 class ChapterController extends Controller
 {
@@ -45,7 +48,7 @@ class ChapterController extends Controller
 
         return $this->render('admin/chapters/view.html.twig', array(
             'listChapters' => $listChapters
-            ));
+        ));
     }
 
     /**
@@ -53,17 +56,24 @@ class ChapterController extends Controller
     */
     public function addAction(Request $request)
     {
+        $chapter = new Chapter();
+        $form = $this->get('form.factory')->create(ChapterType::class, $chapter);
 
-        $session = $request->getSession();
+        if ($request->isMethod('POST') && $form-> handleRequest($request)->isValid()) {
 
-        $session->getFlashBag()->add('info', 'Chapitre bien enregistré');
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($chapter);
+            $em->flush();
 
-        // Le « flashBag » est ce qui contient les messages flash dans la session
-        // Il peut bien sûr contenir plusieurs messages :
-        $session->getFlashBag()->add('info', 'Oui oui, il est bien enregistré !');
+            $request->getSession()->getFlashBag()->add('info', 'Chapitre bien enregistré');
 
-        // Puis on redirige vers la page de visualisation de cette annonce
-        return $this->redirectToRoute('ebook_blog_adminpage');
+            return $this->redirectToRoute('ebook_blog_chapters', array('state' => 'all'));
+
+        }
+
+        return $this->render('admin/chapters/add.html.twig', array(
+            'form' => $form->createView()
+        ));
     }
 
     /**
@@ -71,24 +81,61 @@ class ChapterController extends Controller
     */
     public function editAction($id, Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
 
-        $session = $request->getSession();
+        $chapter = $em->getRepository('EbookBlogBundle:Chapter')->find($id);
 
-        $session->getFlashBag()->add('info', 'Chapitre bien édité');
+        $form = $this->get('form.factory')->create(ChapterEditType::class, $chapter);
 
-        return $this->redirectToRoute('ebook_blog_adminpage');
+        if (null === $chapter) {
+            throw new NotFoundHttpException("Le chapitre d'id ".id. " n'existe pas.");
+        }
+
+        if ($request->isMethod('POST') && $form-> handleRequest($request)->isValid()) {
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($chapter);
+            $em->flush();
+
+            $request->getSession()->getFlashBag()->add('info', 'Chapitre bien édité');
+
+            return $this->redirectToRoute('ebook_blog_chapters', array('state' => 'all'));
+
+        }
+        return $this->render('admin/chapters/edit.html.twig', array(
+            'chapter' => $chapter,
+            'form' => $form->createView()
+        ));
     }
 
     /**
     * @Route("/admin/chapter/{id}/delete", name="ebook_blog_chapter_delete", requirements={"id": "\d+"})
     */
-    public function deleteAction($id, Request $request) {
+    public function deleteAction($id, Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
 
-        $session = $request->getSession();
+        $chapter = $em->getRepository('EbookBlogBundle:Chapter')->find($id);
 
-        $session->getFlashBag()->add('info', 'Chapitre bien supprimé');
+        if (null === $chapter) {
+            throw new NotFoundHttpException("Le chapitre d'id ".id. " n'existe pas.");
+        }
 
-        return $this->redirectToRoute('ebook_blog_homepage');
+        $form = $this->get('form.factory')->create();
+
+        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+          $em->remove($chapter);
+          $em->flush();
+
+          $request->getSession()->getFlashBag()->add('info', "Le chapitre a bien été supprimé.");
+
+          return $this->redirectToRoute('ebook_blog_chapters');
+        }
+
+        return $this->render('admin/chapters/delete.html.twig', array(
+          'chapter' => $chapter,
+          'form'   => $form->createView(),
+        ));
     }
 
 

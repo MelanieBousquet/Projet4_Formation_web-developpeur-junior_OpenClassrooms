@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="chapter")
  * @ORM\Entity(repositoryClass="Ebookblog\BlogBundle\Repository\ChapterRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Chapter
 {
@@ -27,6 +28,11 @@ class Chapter
      * @ORM\Column(name="date", type="datetime")
      */
     private $date;
+
+    /**
+    * @ORM\Column(name="updated_at", type="datetime", nullable=true)
+    */
+    private $updatedAt;
 
     /**
      * @var string
@@ -92,6 +98,14 @@ class Chapter
     public function getDate()
     {
         return $this->date;
+    }
+
+    /**
+    * @ORM\PreUpdate
+    */
+    public function updateDate()
+    {
+        $this->setUpdatedAt(new \Datetime());
     }
 
     /**

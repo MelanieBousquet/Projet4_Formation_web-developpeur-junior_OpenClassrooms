@@ -26,18 +26,20 @@ class ChapterController extends Controller {
             return $this->redirectToRoute('ebook_blog_view', array('id' => $id));
         } */
 
-        $repositoryChapter = $this
-            ->getDoctrine()
-            ->getManager()
-            ->getRepository('EbookBlogBundle:Chapter');
+        $em = $this->getDoctrine()->getManager();
 
-        $repositoryComments = $this
-            ->getDoctrine()
-            ->getManager()
-            ->getRepository('EbookBlogBundle:Comment');
+        $chapter = $em
+            ->getRepository('EbookBlogBundle:Chapter')
+            ->find($id)
+        ;
 
-        $chapter = $repositoryChapter->find($id);
-        $comments = $repositoryComments->findBy(
+        if (null === $chapter) {
+            throw new NotFoundHttpException("Le chapitre d'id ".$id." n'existe pas.");
+        }
+
+        $comments = $em
+            ->getRepository('EbookBlogBundle:Comment')
+            ->findBy(
             array('chapter' => $id, 'published' => 1)
         );
 
@@ -47,4 +49,5 @@ class ChapterController extends Controller {
             'comments' => $comments
         ));
     }
+
 }
