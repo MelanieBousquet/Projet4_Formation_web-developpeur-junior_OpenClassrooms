@@ -3,6 +3,7 @@
 namespace Ebookblog\BlogBundle\Controller\Front;
 
 use Ebookblog\BlogBundle\Entity\Chapter;
+use Ebookblog\BlogBundle\Entity\Comment;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,16 +26,25 @@ class ChapterController extends Controller {
             return $this->redirectToRoute('ebook_blog_view', array('id' => $id));
         } */
 
-        $repository = $this
+        $repositoryChapter = $this
             ->getDoctrine()
             ->getManager()
             ->getRepository('EbookBlogBundle:Chapter');
 
-        $chapter = $repository->find($id);
+        $repositoryComments = $this
+            ->getDoctrine()
+            ->getManager()
+            ->getRepository('EbookBlogBundle:Comment');
+
+        $chapter = $repositoryChapter->find($id);
+        $comments = $repositoryComments->findBy(
+            array('chapter' => $id, 'published' => 1)
+        );
 
         // Si on est pas en POST, alors on affiche le formulaire
         return $this->render('front/chapter/view.html.twig', array (
             'chapter' => $chapter,
+            'comments' => $comments
         ));
     }
 }

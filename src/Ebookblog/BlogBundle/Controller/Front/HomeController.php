@@ -21,7 +21,9 @@ class HomeController extends Controller {
             ->getManager()
             ->getRepository('EbookBlogBundle:Chapter');
 
-        $listChapters = $repository->findAll();
+            $listChapters = $repository->findBy(
+                    array('published' => 1)
+            );
 
         return $this->render('front/home/index.html.twig', array(
             'listChapters' => $listChapters

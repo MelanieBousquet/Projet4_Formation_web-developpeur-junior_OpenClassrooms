@@ -24,5 +24,17 @@
     <!-- Post Content -->
     <article>
          {{ chapter.content }}
+         <h2>Commentaires</h2>
+         {% for comment in comments %}
+<div class="post-preview">
+
+        <h3 class="post-title">{{ comment.author }}, le
+        {{ comment.date|date('d/m/Y') }} </h3>
+    <p class="post-meta"> {{ comment.content }}</p>
+</div>
+    {% else %}
+      <div>Pas de commentaires</div>
+    {% endfor %}
     </article>
+
     {% endblock %}

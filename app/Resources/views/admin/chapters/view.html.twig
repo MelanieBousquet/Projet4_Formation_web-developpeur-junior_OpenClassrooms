@@ -21,6 +21,7 @@
                         <th></th> <!-- Subtitle column -->
                         <th>Titre</th>
                         <th>Contenu</th>
+                        <th>Statut</th>
                         <th></th>  <!-- Actions column -->
                     </tr>
                 </thead>
@@ -29,6 +30,13 @@
                     <td>{{ chapter.subtitle }}</td>
                     <td><a class="chapterTitle" href="{{ path('ebook_blog_chapter_edit', { 'id': chapter.id }) }}">{{ chapter.title }}</a></td>
                     <td>{{ chapter.content | truncate(60) }}</td>
+                    <td>
+                        {% if chapter.published %}
+                        Publié
+                        {% else %}
+                        Brouillon
+                        {% endif %}
+                    </td>
                     <td>
                         <a href="{{ path('ebook_blog_chapter_edit', { 'id': chapter.id }) }}" class="btn btn-info btn-xs" title="Editer"><span class="glyphicon glyphicon-edit"></span></a>
                         <button type="button" class="btn btn-danger btn-xs" title="Supprimer" data-toggle="modal" data-target="#chapterDialog{{ chapter.id }}"><span class="glyphicon glyphicon-remove"></span>

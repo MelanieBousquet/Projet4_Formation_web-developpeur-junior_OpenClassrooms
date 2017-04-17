@@ -41,6 +41,8 @@ class ChapterController extends Controller
                 break;
 
         };
+
+
         return $this->render('admin/chapters/view.html.twig', array(
             'listChapters' => $listChapters
             ));
