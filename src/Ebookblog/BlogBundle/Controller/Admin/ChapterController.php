@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 
 class ChapterController extends Controller
@@ -129,7 +130,9 @@ class ChapterController extends Controller
 
           $request->getSession()->getFlashBag()->add('info', "Le chapitre a bien été supprimé.");
 
-          return $this->redirectToRoute('ebook_blog_chapters');
+          return $this->redirectToRoute('ebook_blog_chapters', array(
+              'state' =>'all'
+          ));
         }
 
         return $this->render('admin/chapters/delete.html.twig', array(

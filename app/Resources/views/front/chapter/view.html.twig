@@ -36,7 +36,11 @@
         {% else %}
             <div>Pas de commentaires</div>
         {% endif %}
-
+                {% for flashMessage in app.session.flashbag.get('info') %}
+                    <div class="alert alert-success">
+                        {{ flashMessage }}
+                    </div>
+                {% endfor %}
 
         <h3>Ajouter un commentaire</h3>
             {% if form %}
@@ -60,12 +64,13 @@
 
 
                   {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
+
+                    {# Génération automatique des champs pas encore écrits.
+                         Dans cet exemple, ce serait le champ CSRF (géré automatiquement par Symfony !)
+                         et tous les champs cachés (type « hidden »). #}
+                      {{ form_rest(form) }}
                 {{ form_end(form) }}
-                {% for flashMessage in app.session.flashbag.get('success') %}
-                    <div class="alert alert-success">
-                        {{ flashMessage }}
-                    </div>
-                {% endfor %}
+
             {% else %}
             {% endif %}
     </article>

@@ -34,15 +34,18 @@ class ChapterController extends Controller {
             array('chapter' => $id, 'published' => 1)
         );
 
-        $form = $this->get('form.factory')->create(CommentType::class);
+        $comment = new Comment;
+
+        $form = $this->get('form.factory')->create(CommentType::class, $comment);
 
         if ($request->isMethod('POST') && $form-> handleRequest($request)->isValid()) {
 
             $em = $this->getDoctrine()->getManager();
+            $comment->setChapter($chapter);
             $em->persist($comment);
             $em->flush();
 
-            $resquest->getSession()->getFlashbag()->add('info', 'Commentaire bien enregistré, en attente de modération');
+            $request->getSession()->getFlashbag()->add('info', 'Commentaire bien enregistré, en attente de modération');
 
             return $this->redirectToRoute('ebook_blog_view', array('id' => $id));
         }

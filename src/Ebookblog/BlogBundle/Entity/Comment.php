@@ -3,6 +3,7 @@
 namespace Ebookblog\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Comment
@@ -15,6 +16,7 @@ class Comment
     /**
      * @ORM\ManyToOne(targetEntity="Ebookblog\BlogBundle\Entity\Chapter")
      * @ORM\JoinColumn(nullable=false)
+     *
      */
     private $chapter;
     /**
@@ -30,6 +32,7 @@ class Comment
      * @var \DateTime
      *
      * @ORM\Column(name="date", type="datetime")
+     * @Assert\DateTime())
      */
     private $date;
 
@@ -37,6 +40,7 @@ class Comment
      * @var string
      *
      * @ORM\Column(name="author", type="string", length=255)
+     * @Assert\NotBlank(message = "Votre commentaire doit spécifier un auteur")
      */
     private $author;
 
@@ -44,13 +48,22 @@ class Comment
      * @var string
      *
      * @ORM\Column(name="content", type="text")
+     * @Assert\NotBlank(message = "Le commentaire ne peut pas être vide")
      */
     private $content;
 
     /**
     * @ORM\Column(name="published", type="boolean")
+    * @Assert\Type("bool")
     */
-    private $published = true;
+    private $published = false;
+
+    public function __construct()
+    {
+        // Par défaut, la date de publication est la date d'aujourd'hui
+        $this->date = new \Datetime();
+        $this->published = false;
+    }
     /**
      * Get id
      *

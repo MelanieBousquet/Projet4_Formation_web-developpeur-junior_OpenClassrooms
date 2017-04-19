@@ -3,6 +3,8 @@
 namespace Ebookblog\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Chapter
@@ -11,6 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="Ebookblog\BlogBundle\Repository\ChapterRepository")
  * @ORM\HasLifecycleCallbacks()
  */
+
 class Chapter
 {
     /**
@@ -26,6 +29,7 @@ class Chapter
      * @var \DateTime
      *
      * @ORM\Column(name="date", type="datetime")
+     * @Assert\DateTime()
      */
     private $date;
 
@@ -37,14 +41,16 @@ class Chapter
     /**
      * @var string
      *
-     * @ORM\Column(name="title", type="string", length=255)
+     * @ORM\Column(name="title", type="string", length=255, unique=true)
+     * @Assert\NotBlank(message = "Le chapitre doit comporter un titre")
      */
     private $title;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="subtitle", type="string", length=255)
+     * @ORM\Column(name="subtitle", type="string", length=255, unique=true)
+     * @Assert\NotBlank(message = "Le chapitre comporter un sous-titre")
      */
     private $subtitle;
 
@@ -52,11 +58,13 @@ class Chapter
      * @var string
      *
      * @ORM\Column(name="content", type="text")
+     * @Assert\Length(min=10, minMessage = "Le chapitre doit comporter au moins 10 caractères")
      */
     private $content;
 
     /**
     * @ORM\Column(name="published", type="boolean")
+    * @Assert\Type("bool")
     */
     private $published = true;
 
@@ -99,7 +107,26 @@ class Chapter
     {
         return $this->date;
     }
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+    /**
+     * Set updatedAt
+     *
+     * @return \DateTime
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
 
+        return $this;
+    }
     /**
     * @ORM\PreUpdate
     */
