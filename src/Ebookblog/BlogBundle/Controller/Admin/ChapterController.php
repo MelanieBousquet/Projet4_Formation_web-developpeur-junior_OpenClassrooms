@@ -11,12 +11,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 
 class ChapterController extends Controller
 {
     /**
     * @Route("/admin/chapters/{state}", name="ebook_blog_chapters")
+    * @Security("has_role('ROLE_ADMIN')")
     */
     public function viewAction($state)
     {

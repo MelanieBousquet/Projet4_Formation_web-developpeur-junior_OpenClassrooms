@@ -2,3 +2,8 @@ ebook_blog:
     resource: "@EbookBlogBundle/Controller"
     type:   annotation
 
+login_check:
+    path:  /login_check
+
+logout:
+    path: /logout
