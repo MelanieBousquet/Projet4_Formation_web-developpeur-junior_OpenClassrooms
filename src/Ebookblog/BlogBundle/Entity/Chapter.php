@@ -12,6 +12,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Table(name="chapter")
  * @ORM\Entity(repositoryClass="Ebookblog\BlogBundle\Repository\ChapterRepository")
  * @ORM\HasLifecycleCallbacks()
+ * @UniqueEntity(fields="title", message="Un chapitre existe déjà avec ce titre.")
+ * @UniqueEntity(fields="subtitle", message="Un chapitre existe déjà avec ce sous-titre.")
  */
 
 class Chapter

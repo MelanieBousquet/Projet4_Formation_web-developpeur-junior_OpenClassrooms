@@ -2,3 +2,10 @@ services:
 #    ebook_blog.example:
 #        class: Ebookblog\BlogBundle\Example
 #        arguments: ["@service_id", "plain_value", "%parameter%"]
+    ebook_blog.twig_extension:
+        class: Ebookblog\BlogBundle\Twig\ChaptersMenu
+        arguments:
+            doctrine: "@doctrine"
+        public: flase
+        tags:
+            - {name: twig.extension}

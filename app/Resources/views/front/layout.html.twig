@@ -55,8 +55,9 @@
                     <li class="dropdown">
                         <a href="#" class="dropbtn">Chapitres</a>
                         <div class="dropdown-content">
-                                 <a href="#">Chap</a>
-
+                            {% for chapter in listChapters %}
+                                 <a href="{{ path('ebook_blog_view', {'id': chapter.id}) }}">{{ chapter.subtitle }}</a>
+                            {% endfor %}
                         </div>
                     </li>
 
