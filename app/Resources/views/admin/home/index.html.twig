@@ -11,7 +11,7 @@
     </div>
     <!-- /.row -->
     <div class="row">
-        <div class="col-lg-3 col-md-6">
+        <div class="col-lg-3 col-lg-offset-3 col-md-6">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <div class="row">
@@ -26,7 +26,7 @@
                 </div>
                 <a href="#">
                     <div class="panel-footer">
-                        <span class="pull-left">Voir les détails</span>
+                        <span class="pull-left">Modération</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                         <div class="clearfix"></div>
                     </div>
@@ -38,17 +38,17 @@
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-xs-3">
-                            <i class="fa fa-tasks fa-5x"></i>
+                            <i class="fa fa-book fa-5x"></i>
                         </div>
                         <div class="col-xs-9 text-right">
                             <div class="huge">12</div>
-                            <div>Nombre de chapitres</div>
+                            <div>Chapitres non publiés</div>
                         </div>
                     </div>
                 </div>
                 <a href="#">
                     <div class="panel-footer">
-                        <span class="pull-left">Voir la liste</span>
+                        <span class="pull-left">Liste des brouillons</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                         <div class="clearfix"></div>
                     </div>
@@ -58,6 +58,71 @@
 
     </div>
     <!-- /.row -->
+    <div class="row">
+
+        <div class="col-md-6 col-sm-12">
+            <h2>Commentaires à modérer</h2>
+
+             {% if listComments %}
+            <div class="table-responsive">
+                <table class="table table-hover table-condensed">
+                    <thead>
+                        <tr>
+                            <th>Chapitre</th>
+                            <th>Date</th>
+                            <th>Auteur</th>
+                            <th>Contenu</th>
+                            <th></th>  <!-- Actions column -->
+                        </tr>
+                    </thead>
+                    {% for comment in listComments %}
+                    <tr>
+                        <td></td>
+                        <td><a class="chapterTitle" href="#">{{ comment.date|date('d/m/Y')  }}</a></td>
+                        <td>{{ comment.author }}</td>
+                        <td>{{ comment.content | truncate(60) }}</td>
+
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            {% else %}
+            <div class="alert alert-warning">Pas de nouveaux commentaires.</div>
+            {% endif %}
+
+        </div>
+
+        <div class="col-md-6 col-sm-12">
+            <h2>Brouillons </h2>
+
+             {% if listChapters %}
+            <div class="table-responsive">
+                <table class="table table-hover table-condensed">
+                    <thead>
+                        <tr>
+                            <th>Sous-titre</th> <!-- Subtitle column -->
+                            <th>Titre</th>
+                            <th>Contenu</th>
+                            <th></th>  <!-- Actions column -->
+                        </tr>
+                    </thead>
+                    {% for chapter in listChapters %}
+                    <tr>
+                        <td>{{ chapter.subtitle }}</td>
+                        <td><a class="chapterTitle" href="{{ path('ebook_blog_chapter_edit', { 'id': chapter.id }) }}">{{ chapter.title }}</a></td>
+                        <td>{{ chapter.content | truncate(60) | raw }}</td>
+                        <td>
+                            <a href="{{ path('ebook_blog_chapter_edit', { 'id': chapter.id }) }}" class="btn btn-info btn-xs" title="Editer"><span class="glyphicon glyphicon-edit"></span></a>
+                            <a href="{{ path('ebook_blog_chapter_delete', { 'id': chapter.id }) }}" class="btn btn-danger btn-xs" title="Supprimer"><span class="glyphicon glyphicon-remove"></span></a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            {% else %}
+            <div class="alert alert-warning">Pas de brouillon.</div>
+            {% endif %}
+        </div>
 
 </div>
 <!-- /#page-wrapper -->

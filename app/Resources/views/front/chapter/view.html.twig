@@ -63,12 +63,10 @@
                 </div>
 
 
-                  {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
+                {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}, 'label': 'Envoyer'}) }}
 
-                    {# Génération automatique des champs pas encore écrits.
-                         Dans cet exemple, ce serait le champ CSRF (géré automatiquement par Symfony !)
-                         et tous les champs cachés (type « hidden »). #}
-                      {{ form_rest(form) }}
+                {# champ CSRF (géré automatiquement par Symfony !) #}
+                {{ form_rest(form) }}
                 {{ form_end(form) }}
 
             {% else %}

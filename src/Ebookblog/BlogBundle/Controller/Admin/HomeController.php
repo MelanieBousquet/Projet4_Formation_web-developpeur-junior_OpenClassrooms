@@ -16,7 +16,26 @@ class HomeController extends Controller
     * @Security("has_role('ROLE_ADMIN')")
     */
     public function indexAction() {
+        $repository = $this
+            ->getDoctrine()
+            ->getManager();
 
-        return $this->render('admin/home/index.html.twig');
+        $listChapters = $repository
+            ->getRepository('EbookBlogBundle:Chapter')
+            ->findBy(
+                array('published' => 0)
+            );
+
+        $listComments = $repository
+            ->getRepository('EbookBlogBundle:Comment')
+            ->findBy(
+                array('published' => 0)
+        );
+
+        return $this->render('admin/home/index.html.twig', array(
+            'listChapters' => $listChapters,
+            'listComments' => $listComments
+
+        ));
     }
 }

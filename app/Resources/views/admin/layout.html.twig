@@ -40,13 +40,13 @@
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">SB Admin v2.0</a>
+                <a class="navbar-brand" href="/">Voir le site</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -75,7 +75,7 @@
                             <a href="{{ path('ebook_blog_adminpage') }}"><i class="fa fa-dashboard fa-fw"></i>Panneau d'administration</a>
                         </li>
                         <li>
-                            <a href="{{ path('ebook_blog_comments', {'state': 'all'}) }}"><i class="fa fa-bar-chart-o fa-fw"></i>Commentaires<span class="fa arrow"></span></a>
+                            <a href="{{ path('ebook_blog_comments', {'state': 'all'}) }}"><i class="fa fa-comment fa-fw"></i>Commentaires<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
                                     <a href="{{ path('ebook_blog_comments', {'state': 'unpublished'}) }}">En attente de modération</a>
@@ -88,7 +88,7 @@
                         </li>
 
                         <li>
-                            <a href="{{ path('ebook_blog_chapters', {'state': 'all'})}}"><i class="fa fa-wrench fa-fw"></i>Chapitres<span class="fa arrow"></span></a>
+                            <a href="{{ path('ebook_blog_chapters', {'state': 'all'})}}"><i class="fa fa-book fa-fw"></i>Chapitres<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
                                     <a href="{{ path('ebook_blog_chapters', {'state': 'published'})}}">Publiés</a>
@@ -132,7 +132,9 @@
     <script>
             tinymce.init({
                 selector: 'textarea#ebookblog_blogbundle_chapter_content',
-                selector: 'textarea#chapter_edit_content'
+                selector: 'textarea#chapter_edit_content',
+                language: 'fr_FR',
+                language_url: 'http://melanie-bousquet.fr/tinymce/langs/fr_FR.js'
             });
     </script>
 
