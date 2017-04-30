@@ -29,7 +29,7 @@
                 <tr>
                     <td>{{ chapter.subtitle }}</td>
                     <td><a class="chapterTitle" href="{{ path('ebook_blog_chapter_edit', { 'id': chapter.id }) }}">{{ chapter.title }}</a></td>
-                    <td>{{ chapter.content | truncate(60) }}</td>
+                    <td>{{ chapter.content | truncate(60) | raw }}</td>
                     <td>
                         {% if chapter.published %}
                         Publié

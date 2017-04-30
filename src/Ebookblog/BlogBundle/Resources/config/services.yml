@@ -6,6 +6,7 @@ services:
         class: Ebookblog\BlogBundle\Twig\ChaptersMenu
         arguments:
             doctrine: "@doctrine"
-        public: flase
+            twig:  "@twig"
+        public: false
         tags:
             - {name: twig.extension}

@@ -23,7 +23,7 @@
     {% block body %}
     <!-- Post Content -->
     <article>
-        {{ chapter.content }}
+        {{ chapter.content | raw }}
 
         {% if comments %}
              <h2>Commentaires</h2>
