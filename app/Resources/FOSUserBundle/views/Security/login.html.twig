@@ -1,0 +1,73 @@
+{% extends 'front/layout.html.twig' %}
+
+{% block title %}{{ parent() }} Connexion au panneau d'administration -{% endblock %}
+
+{% block header %}
+    <header class="intro-header" style="background-image: url( {{asset('img/home-bg.jpg')}})">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="site-heading">
+                        <h1>Administration</h1>
+                        <hr class="small">
+                        <span class="subheading">Connexion au panneau d'administration</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    {% for key, messages in app.session.flashbag.all() %}
+    {% for message in messages %}
+      <div class="alert alert-{{ key }}">
+        {{ message|trans({}, 'FOSUserBundle') }}
+      </div>
+    {% endfor %}
+  {% endfor %}
+{% endblock %}
+
+{% block body %}
+
+        {% block fos_user_content %}
+        {% trans_default_domain 'FOSUserBundle' %}
+
+
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <div class="login-panel panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Connexion</h3>
+            </div>
+            <div class="panel-body">
+                {% if error %}
+                    <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}
+                <form action="{{ path("fos_user_security_check") }}" method="post">
+                    {% if csrf_token %}
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+                    {% endif %}
+                    <fieldset>
+                        <div class="form-group">
+                            <label for="username">{{ 'security.login.username'|trans }}</label>
+                            <input type="text" class="form-control" id="username" name="_username" value="{{ last_username }}" required="required" />
+                        </div>
+                        <div class="form-group">
+                            <label for="password">{{ 'security.login.password'|trans }}</label>
+                            <input type="password" class="form-control" id="password" name="_password" required="required" />
+                        </div>
+                        <div class="form-group">
+                            <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+                            <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
+                        </div>
+                        <input type="submit" id="_submit" class="btn btn-lg btn-success btn-block" name="_submit" value="{{ 'security.login.submit'|trans }}" />
+                    </fieldset>
+                </form>
+                <a href="{{ path('fos_user_resetting_request') }}">Mot de passe oublié ?</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+        {% endblock %}
+
+{% endblock %}

@@ -29,5 +29,4 @@ class LoginController extends Controller {
           'error'         => $authenticationUtils->getLastAuthenticationError(),
         ));
       }
-
 }

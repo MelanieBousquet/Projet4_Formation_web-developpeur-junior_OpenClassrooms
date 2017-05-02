@@ -3,54 +3,31 @@
 {% block body %}
 
 <div id="page-wrapper">
-
-<h2 style="padding-top: 20px;">Commentaires</h2>
-
-{% for flashMessage in app.session.flashbag.get('info') %}
-<div class="alert alert-success">
-    {{ flashMessage }}
-</div>
-{% endfor %}
-
-
-        {% if listComments %}
-        <div class="table-responsive">
-            <table class="table table-hover table-condensed">
-                <thead>
-                    <tr>
-                        <th>Chapitre</th>
-                        <th>Date</th>
-                        <th>Auteur</th>
-                        <th>Contenu</th>
-                        <th>Statut</th>
-                        <th></th>  <!-- Actions column -->
-                    </tr>
-                </thead>
-                {% for comment in listComments %}
-                <tr>
-                    <td></td>
-                    <td><a class="chapterTitle" href="#">{{ comment.date|date('d/m/Y')  }}</a></td>
-                    <td>{{ comment.author }}</td>
-                    <td>{{ comment.content | truncate(60) }}</td>
-                    <td>
-                        {% if comment.published %}
-                        Publié
-                        {% else %}
-                        En attente de modération
-                        {% endif %}
-                    </td>
-
-                </tr>
-                {% endfor %}
-            </table>
+   <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Modération commentaire</h1>
         </div>
-        {% else %}
-        <div class="alert alert-warning">Pas de commentaire trouvé.</div>
-        {% endif %}
+        <!-- /.col-lg-12 -->
+    </div>
 
+<h3>Chapitre {{ comment.chapter.getId() }}, Auteur: "{{ comment.author }}", le {{ comment.date|date('d/m/Y')  }} | Etat :
+    {% if comment.published %}
+    Publié
+    {% else %}
+    En attente de modération
+    {% endif %}</h3>
 
-
+<p>Commentaire: " {{ comment.content }} "</p>
+<a href="{{ path('ebook_blog_comments', { 'state': 'unpublished' }) }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-chevron-left"></i>
+      Retour
+    </a>
+{% if comment.published == 0 %}
+<a href="{{ path('ebook_blog_comment_add', { 'id': comment.id }) }}" class="btn btn-info btn">Accepter</a>
+{% endif %}
+<a href="{{ path('ebook_blog_comment_delete', { 'id': comment.id }) }}" class="btn btn-danger btn" title="Supprimer">Supprimer</a>
 </div>
 <!-- /#page-wrapper -->
+
 
 {% endblock %}

@@ -18,7 +18,7 @@ class CommentController extends Controller
    * @Security("has_role('ROLE_ADMIN')")
    */
 
-    public function viewAction($state)
+    public function viewListAction($state)
     {
         $repository = $this
             ->getDoctrine()
@@ -34,21 +34,63 @@ class CommentController extends Controller
             $listComments = $repository->findAll();
         }
 
-       return $this->render('admin/comments/view.html.twig', array(
+       return $this->render('admin/comments/viewList.html.twig', array(
            'listComments' => $listComments
        ));
     }
+
+    /**
+   * @Route("/admin/comment/{id}", name="ebook_blog_comment", requirements={"id": "\d+"})
+   * @Security("has_role('ROLE_ADMIN')")
+   */
+
+    public function viewAction($id, Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $comment = $em->getRepository('EbookBlogBundle:Comment')->find($id);
+
+        if (null === $comment) {
+            throw new NotFoundHttpException("Le commentaire d'id ".$id." n'existe pas.");
+        }
+
+       return $this->render('admin/comments/view.html.twig', array(
+           'comment' => $comment
+       ));
+    }
+
     /**
     * @Route("/admin/comments/{id}/accept", name="ebook_blog_comment_add", requirements={"id": "\d+"})
     */
 
     public function acceptAction($id, Request $request) {
 
-        $session = $request->getSession();
+        $em = $this->getDoctrine()->getManager();
 
-        $session->getFlashBag()->add('info', 'Commentaire publié');
+        $comment = $em->getRepository('EbookBlogBundle:Comment')->find($id);
 
-        return $this->redirectToRoute('ebook_blog_homepage');
+        if (null === $comment) {
+            throw new NotFoundHttpException("Le commentaire d'id ".id. " n'existe pas.");
+        }
+
+        $form = $this->get('form.factory')->create();
+
+        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+            $comment->setPublished(true);
+            $em->persist($comment);
+            $em->flush();
+
+              $request->getSession()->getFlashBag()->add('info', "Le commentaire a bien été publié.");
+
+              return $this->redirectToRoute('ebook_blog_comments', array(
+                  'state' =>'unpublished'
+              ));
+        }
+
+        return $this->render('admin/comments/accept.html.twig', array(
+          'comment' => $comment,
+          'form'   => $form->createView(),
+        ));
     }
 
     /**
@@ -56,11 +98,34 @@ class CommentController extends Controller
     */
     public function deleteAction($id, Request $request) {
 
-        $session = $request->getSession();
+        $em = $this->getDoctrine()->getManager();
 
-        $session->getFlashBag()->add('info, Commentaire supprimé');
+        $comment = $em->getRepository('EbookBlogBundle:Comment')->find($id);
 
-        return $this->redirectToRoute('ebook_blog_homepage');
+        if (null === $comment) {
+            throw new NotFoundHttpException("Le commentaire d'id ".id. " n'existe pas.");
+        }
+
+        $form = $this->get('form.factory')->create();
+
+        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+          $em->remove($comment);
+          $em->flush();
+
+          $request->getSession()->getFlashBag()->add('info', "Le commentaire a bien été supprimé.");
+
+          return $this->redirectToRoute('ebook_blog_comments', array(
+              'state' =>'unpublished'
+          ));
+        }
+
+        return $this->render('admin/comments/delete.html.twig', array(
+          'comment' => $comment,
+          'form'   => $form->createView(),
+        ));
     }
 
 }
+
+
+
