@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ chapter.title }}</title>
+</head>
+<body>
+
+{% block body %}
+
+
+
+    <div class="col-md-10">
+        <h2>{{ chapter.title }}</h2>
+        <h3>{{ chapter.subtitle }}</h3>
+        <p>{{ chapter.content | raw }}</p>
+    </div>
+
+    <page_footer>
+        [[page_cu]]/[[page_nb]]
+    </page_footer>
+
+
+
+
+{% endblock %}
+
+</body>
+</html>

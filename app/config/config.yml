@@ -10,7 +10,6 @@ parameters:
 
 framework:
     #esi: ~
-    #translator: { fallbacks: ['%locale%'] }
     secret: '%secret%'
     router:
         resource: '%kernel.root_dir%/config/routing.yml'
@@ -71,3 +70,20 @@ swiftmailer:
     username: '%mailer_user%'
     password: '%mailer_password%'
     spool: { type: memory }
+
+fos_user:
+    db_driver: orm
+    firewall_name: main
+    user_class: Ebookblog\BlogBundle\Entity\User
+    from_email:
+      address: "bousquet.melanie@gmail.com"
+      sender_name: "Demo"
+    service:
+        mailer: fos_user.mailer.twig_swift
+    resetting:
+        email:
+            template:   email/password_resetting.email.twig
+            from_email:
+                address: bousquet.melanie@gmail.com
+                sender_name: "Réinitialisation du mot de passe"
+

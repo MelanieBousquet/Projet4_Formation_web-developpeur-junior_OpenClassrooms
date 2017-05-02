@@ -11,9 +11,7 @@ security:
 
   providers:
     main:
-      entity:
-        class: Ebookblog\BlogBundle\Entity\User
-        property: username
+      id:  fos_user.user_provider.username
 
 
   firewalls:
@@ -25,11 +23,13 @@ security:
         anonymous: true
         provider: main
         form_login:
-            login_path: ebook_blog_login
-            check_path: login_check
+            login_path: fos_user_security_login
+            check_path: fos_user_security_check
         logout:
-            path:    logout
+            path:    fos_user_security_logout
             target:  /
+        remember_me:
+            secret: %secret%
 
   access_control:
     - { path: ^/admin, roles: ROLE_ADMIN }

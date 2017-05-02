@@ -68,7 +68,7 @@
                 <table class="table table-hover table-condensed">
                     <thead>
                         <tr>
-                            <th>Chapitre</th>
+                            <th>Chap</th>
                             <th>Date</th>
                             <th>Auteur</th>
                             <th>Contenu</th>
@@ -77,7 +77,7 @@
                     </thead>
                     {% for comment in listComments %}
                     <tr>
-                        <td></td>
+                        <td>{{ comment.chapter.getId() }} </td>
                         <td><a class="chapterTitle" href="#">{{ comment.date|date('d/m/Y')  }}</a></td>
                         <td>{{ comment.author }}</td>
                         <td>{{ comment.content | truncate(60) }}</td>
