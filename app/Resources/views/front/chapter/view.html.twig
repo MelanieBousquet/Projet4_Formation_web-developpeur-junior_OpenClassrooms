@@ -13,6 +13,8 @@
                         <h1>{{ chapter.title }}</h1>
                         <h2 class="subheading">{{ chapter.subtitle }}</h2>
                         <span class="meta">Par Jean Forteroche, le {{ chapter.date|date('d/m/Y') }}</span>
+                        <br/>
+                        <a class="btn btn-primary" href="{{ path('ebook_blog_chapterpdf', {'id': chapter.id}) }}">Lire en PDF</a>
                     </div>
                 </div>
             </div>

@@ -1,5 +1,7 @@
 <?php
 
+/* HomePage : List of chapters */
+
 namespace Ebookblog\BlogBundle\Controller\Front;
 
 use Ebookblog\BlogBundle\Entity\Chapter;

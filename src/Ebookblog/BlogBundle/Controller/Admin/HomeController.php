@@ -1,5 +1,7 @@
 <?php
 
+/* Admin HomePage : number and list of unpublished chapters, number and list of unmoderated comments  */
+
 namespace Ebookblog\BlogBundle\Controller\Admin;
 
 use Symfony\Component\HttpFoundation\Response;
@@ -25,16 +27,20 @@ class HomeController extends Controller
             ->findBy(
                 array('published' => 0)
             );
+        $nbChapters = (int)count($listChapters);
 
         $listComments = $repository
             ->getRepository('EbookBlogBundle:Comment')
             ->findBy(
                 array('published' => 0)
         );
+        $nbComments = (int)count($listComments);
 
         return $this->render('admin/home/index.html.twig', array(
             'listChapters' => $listChapters,
-            'listComments' => $listComments
+            'nbChapters' => $nbChapters,
+            'listComments' => $listComments,
+            'nbComments' => $nbComments
 
         ));
     }

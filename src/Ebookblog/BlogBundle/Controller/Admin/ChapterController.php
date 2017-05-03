@@ -1,5 +1,7 @@
 <?php
 
+/* Pages to administrate the chapters : published, unpublished, or both of them (view list, create, edit, delete) */
+
 namespace Ebookblog\BlogBundle\Controller\Admin;
 
 use Ebookblog\BlogBundle\Entity\Chapter;
@@ -17,6 +19,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 class ChapterController extends Controller
 {
     /**
+    * List of chapters (published or not, or both categories)
+    *
     * @Route("/admin/chapters/{state}", name="ebook_blog_chapters")
     * @Security("has_role('ROLE_ADMIN')")
     */
@@ -55,6 +59,8 @@ class ChapterController extends Controller
     }
 
     /**
+    * Add a chapter
+    *
     * @Route("/admin/chapter/add", name="ebook_blog_chapter_add")
     */
     public function addAction(Request $request)
@@ -80,6 +86,8 @@ class ChapterController extends Controller
     }
 
     /**
+    * Edit a chapter
+    *
     * @Route("/admin/chapter/{id}/edit", name="ebook_blog_chapter_edit", requirements={"id": "\d+"})
     */
     public function editAction($id, Request $request)
@@ -112,6 +120,8 @@ class ChapterController extends Controller
     }
 
     /**
+    * Delete a chapter
+    *
     * @Route("/admin/chapter/{id}/delete", name="ebook_blog_chapter_delete", requirements={"id": "\d+"})
     */
     public function deleteAction($id, Request $request)
@@ -142,7 +152,5 @@ class ChapterController extends Controller
           'form'   => $form->createView(),
         ));
     }
-
-
 
 }

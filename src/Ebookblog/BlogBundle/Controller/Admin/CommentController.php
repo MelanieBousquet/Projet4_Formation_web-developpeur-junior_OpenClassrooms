@@ -1,5 +1,7 @@
 <?php
 
+/* Moderation of the comments */
+
 namespace Ebookblog\BlogBundle\Controller\Admin;
 
 use Ebookblog\BlogBundle\Entity\Chapter;
@@ -14,6 +16,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 class CommentController extends Controller
 {
    /**
+   * View comments, unpublished and waiting to be moderated, or all
+   *
    * @Route("/admin/comments/{state}", name="ebook_blog_comments")
    * @Security("has_role('ROLE_ADMIN')")
    */
@@ -39,7 +43,9 @@ class CommentController extends Controller
        ));
     }
 
-    /**
+   /**
+   * Read a specific comment
+   *
    * @Route("/admin/comment/{id}", name="ebook_blog_comment", requirements={"id": "\d+"})
    * @Security("has_role('ROLE_ADMIN')")
    */
@@ -60,6 +66,8 @@ class CommentController extends Controller
     }
 
     /**
+    * Moderate a comment : accept publication
+    *
     * @Route("/admin/comments/{id}/accept", name="ebook_blog_comment_add", requirements={"id": "\d+"})
     */
 
@@ -94,6 +102,8 @@ class CommentController extends Controller
     }
 
     /**
+    * Moderation : delete a comment
+    *
     * @Route("/admin/comment/{id}/delete", name="ebook_blog_comment_delete", requirements={"id": "\d+"})
     */
     public function deleteAction($id, Request $request) {

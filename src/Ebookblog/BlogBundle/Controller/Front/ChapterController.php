@@ -1,5 +1,7 @@
 <?php
 
+/* View a particular chapter and associated comments + Comment form  */
+
 namespace Ebookblog\BlogBundle\Controller\Front;
 
 use Ebookblog\BlogBundle\Entity\Chapter;

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html>
 <head>
     <title>{{ chapter.title }}</title>
@@ -8,12 +8,16 @@
 {% block body %}
 
 
-
+<div>
     <div class="col-md-10">
         <h2>{{ chapter.title }}</h2>
         <h3>{{ chapter.subtitle }}</h3>
-        <p>{{ chapter.content | raw }}</p>
     </div>
+</div>
+
+<div>
+    <p>{{ chapter.content | raw }}</p>
+</div>
 
     <page_footer>
         [[page_cu]]/[[page_nb]]
