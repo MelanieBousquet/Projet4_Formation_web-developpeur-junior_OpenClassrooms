@@ -26,6 +26,7 @@
                         <th>Chapitre</th>
                         <th>Date</th>
                         <th>Auteur</th>
+                        <th>Email</th>
                         <th>Contenu</th>
                         <th>Statut</th>
                         <th></th>  <!-- Actions column -->
@@ -34,8 +35,9 @@
                 {% for comment in listComments %}
                 <tr>
                     <td>{{ comment.chapter.getId() }}</td>
-                    <td><a class="chapterTitle" href="{{ path('ebook_blog_comment', { 'id': comment.id }) }}">{{ comment.date|date('d/m/Y')  }}</a></td>
+                    <td>{{ comment.date|date('d/m/Y')  }}</td>
                     <td>{{ comment.author }}</td>
+                    <td>{{ comment.email }}</td>
                     <td>{{ comment.content | truncate(60) }}</td>
                     <td>
                         {% if comment.published %}
@@ -43,6 +45,9 @@
                         {% else %}
                         En attente de modération
                         {% endif %}
+                    </td>
+                    <td>
+                        <a class="chapterTitle" href="{{ path('ebook_blog_comment', { 'id': comment.id }) }}"><button class="btn btn-primary">Modérer</button></a>
                     </td>
 
                 </tr>

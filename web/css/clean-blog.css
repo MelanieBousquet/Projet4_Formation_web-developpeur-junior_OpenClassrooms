@@ -491,3 +491,12 @@ img::-moz-selection {
 body {
     -webkit-tap-highlight-color: #0085A1;
 }
+
+@media only screen and (max-width: 768px) {
+    div.dropdown-content {
+        width: 100%;
+    }
+    .navbar .navbar-collapse.in {
+        overflow-y: visible;
+}
+}

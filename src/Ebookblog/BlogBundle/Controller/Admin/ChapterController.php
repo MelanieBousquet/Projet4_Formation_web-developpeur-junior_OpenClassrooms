@@ -68,7 +68,7 @@ class ChapterController extends Controller
         $chapter = new Chapter();
         $form = $this->get('form.factory')->create(ChapterType::class, $chapter);
 
-        if ($request->isMethod('POST') && $form-> handleRequest($request)->isValid()) {
+        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($chapter);
@@ -102,7 +102,14 @@ class ChapterController extends Controller
             throw new NotFoundHttpException("Le chapitre d'id ".id. " n'existe pas.");
         }
 
-        if ($request->isMethod('POST') && $form-> handleRequest($request)->isValid()) {
+        /* If an unpublished chapter is published, $date = date of the publication */
+        $state = $chapter->getPublished();
+            if( $state == false) {
+                $date = new \Datetime();
+                $chapter->setDate($date);
+            }
+
+        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($chapter);

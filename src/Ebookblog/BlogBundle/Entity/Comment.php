@@ -47,6 +47,22 @@ class Comment
     /**
      * @var string
      *
+     * @ORM\Column(name="email", type="string", length=255, nullable=true)
+     *
+     */
+    private $email;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="gravatar", type="string", length=255, nullable=true)
+     *
+     */
+    private $gravatar;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="content", type="text")
      * @Assert\NotBlank(message = "Le commentaire ne peut pas être vide")
      */
@@ -120,6 +136,54 @@ class Comment
     public function getAuthor()
     {
         return $this->author;
+    }
+
+    /**
+     *
+     *Get email
+     *
+     *@return Comment
+     */
+    public function setEmail($email) {
+
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     *
+     * Get email
+     *
+     *@return string
+     */
+    public function getEmail() {
+
+        return $this->email;
+    }
+
+    /**
+     *
+     *Get gravatar
+     *
+     *@return Comment
+     */
+    public function setGravatar($gravatar) {
+
+        $this->gravatar = $gravatar;
+
+        return $this;
+    }
+
+    /**
+     *
+     * Get gravatar
+     *
+     *@return string
+     */
+    public function getGravatar() {
+
+        return $this->gravatar;
     }
 
     /**

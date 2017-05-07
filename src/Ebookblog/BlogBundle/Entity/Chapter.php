@@ -60,7 +60,7 @@ class Chapter
      * @var string
      *
      * @ORM\Column(name="content", type="text")
-     * @Assert\Length(min=10, minMessage = "Le chapitre doit comporter au moins 10 caractères")
+     *
      */
     private $content;
 

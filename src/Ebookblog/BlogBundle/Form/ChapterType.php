@@ -22,8 +22,7 @@ class ChapterType extends AbstractType
         $builder
             ->add('title',      TextType::class)
             ->add('subtitle',   TextType::class)
-            ->add('date',       DateType::class)
-            ->add('content',    TextareaType::class)
+            ->add('content',    TextareaType::class, array('required' => false))
             ->add('published',  CheckboxType::class, array('required' => false))
             ->add('save',       SubmitType::class)
         ;

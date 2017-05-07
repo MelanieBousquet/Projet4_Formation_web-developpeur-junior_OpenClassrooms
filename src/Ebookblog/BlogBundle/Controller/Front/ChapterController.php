@@ -44,6 +44,11 @@ class ChapterController extends Controller {
 
             $em = $this->getDoctrine()->getManager();
             $comment->setChapter($chapter);
+            $commentEmail = $comment->getEmail();
+            $url = 'https://www.gravatar.com/avatar/';
+            $url .= md5( strtolower( trim( $commentEmail ) ) );
+            $url .= "?s=80&d=mm&r=g";
+            $comment->setGravatar($url);
             $em->persist($comment);
             $em->flush();
 
@@ -52,11 +57,12 @@ class ChapterController extends Controller {
             return $this->redirectToRoute('ebook_blog_view', array('id' => $id));
         }
 
+
         // Si on est pas en POST, alors on affiche le formulaire
         return $this->render('front/chapter/view.html.twig', array (
             'form' => $form->createView(),
             'chapter' => $chapter,
-            'comments' => $comments,
+            'comments' => $comments
 
         ));
     }

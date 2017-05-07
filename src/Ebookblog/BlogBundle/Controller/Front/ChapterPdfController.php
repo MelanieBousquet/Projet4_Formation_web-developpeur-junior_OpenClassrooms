@@ -25,9 +25,8 @@ class ChapterPdfController extends Controller {
         /* the view we need to convert in pdf */
         $html = $this->renderView('front/chapter/chapterToPdf.html.twig', array('chapter' => $chapter));
         /* call of the html2pdf service */
-        $htmltopdf = $this->get('html2pdf_factory')->create('P', 'A4', 'fr', array(100, 100, 100, 100));
-        /* real size */
-        $htmltopdf->pdf->SetDisplayMode('real');
+        $htmltopdf = new \Html2Pdf('P', 'A4', 'fr', array(100, 100, 100, 100));
+
         /* Take the view in order to convert it in pdf */
         $htmltopdf->writeHTML($html);
         /* Send PDF doc to the pae*/
