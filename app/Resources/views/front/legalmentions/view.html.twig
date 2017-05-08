@@ -1,0 +1,23 @@
+{% extends 'front/layout.html.twig' %} {% block title %} Lecture d'un chapitre {% endblock %} {% block header %}
+<!-- Page Header -->
+<!-- Set your background image for this header on the line below. -->
+<header class="intro-header" style="background: url( {{asset('img/aurora-borealis.jpg')}}) bottom no-repeat ">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>Mentions légales</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+{% endblock %} {% block body %}
+<!-- Post Content -->
+<article>
+
+    {{ legalMentions.content | raw }}
+
+</article>
+
+{% endblock %}
