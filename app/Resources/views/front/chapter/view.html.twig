@@ -9,8 +9,6 @@
                     <h1>{{ chapter.title }}</h1>
                     <h2 class="subheading">{{ chapter.subtitle }}</h2>
                     <span class="meta">Par Jean Forteroche, le {{ chapter.date|date('d/m/Y') }} {% if chapter.date|date('d/m/Y') != chapter.updatedAt|date('d/m/Y') %} , mis à jour le {{ chapter.updatedAt|date('d/m/Y')}} {% endif %}</span>
-                    <br/>
-                    <a class="btn btn-primary" href="{{ path('ebook_blog_chapterpdf', {'id': chapter.id}) }}">Lire en PDF</a>
                 </div>
             </div>
         </div>
@@ -19,6 +17,9 @@
 {% endblock %} {% block body %}
 <!-- Post Content -->
 <article>
+  <div class="col-xs-12 text-center">
+   <a style="margin-bottom: 20px;" class="btn btn-primary" href="{{ path('ebook_blog_chapterpdf', {'id': chapter.id}) }}">Lire en PDF</a><br/>
+    </div>
     {{ chapter.content | raw }} {% if comments %}
     <h2>Commentaires</h2>
     {% for comment in comments %}

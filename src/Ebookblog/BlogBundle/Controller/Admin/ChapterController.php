@@ -34,19 +34,19 @@ class ChapterController extends Controller
         switch ($state) {
 
             case "all" :
-                $listChapters = $repository->findAll();
+                $listChapters = $repository->findBy([], ['date' => 'DESC']);
                 break;
 
             case "published" :
                 $listChapters = $repository->findBy(
-                    array('published' => 1)
+                    array('published' => 1), array('date' => 'DESC')
                 );
                 break;
 
             case "unpublished" :
 
                 $listChapters = $repository->findBy(
-                    array('published' => 0)
+                    array('published' => 0), array('date' => 'DESC')
                 );
                 break;
 

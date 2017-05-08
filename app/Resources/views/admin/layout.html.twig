@@ -49,6 +49,10 @@
                 <a class="navbar-brand" href="{{ path('ebook_blog_homepage') }}">Voir le site</a>
             </div>
             <!-- /.navbar-header -->
+            <ul class="nav navbar-top-links navbar-right">
+                <li><a href="{{ path('fos_user_profile_show') }}"><i class="fa fa-user fa-fw"></i>Mon compte</a></li>
+                <li><a href="{{ path('fos_user_security_logout') }}"><i class="fa fa-sign-out fa-fw"></i> Se déconnecter</a></li>
+            </ul>
 
 
 
@@ -58,6 +62,22 @@
 
                         <li>
                             <a href="{{ path('ebook_blog_adminpage') }}"><i class="fa fa-dashboard fa-fw"></i>Accueil administration</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('ebook_blog_chapters', {'state': 'all'})}}"><i class="fa fa-book fa-fw"></i>Billets<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="{{ path('ebook_blog_chapters', {'state': 'published'})}}">Publiés</a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('ebook_blog_chapters', {'state': 'unpublished'})}}">Brouillons</a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('ebook_blog_chapter_add')}}">Ajouter un billet</a>
+                                </li>
+
+                            </ul>
+                            <!-- /.nav-second-level -->
                         </li>
                         <li>
                             <a href="{{ path('ebook_blog_comments', {'state': 'all'}) }}"><i class="fa fa-comment fa-fw"></i>Commentaires<span class="fa arrow"></span></a>
@@ -71,25 +91,6 @@
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
-
-                        <li>
-                            <a href="{{ path('ebook_blog_chapters', {'state': 'all'})}}"><i class="fa fa-book fa-fw"></i>Chapitres<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="{{ path('ebook_blog_chapters', {'state': 'published'})}}">Publiés</a>
-                                </li>
-                                <li>
-                                    <a href="{{ path('ebook_blog_chapters', {'state': 'unpublished'})}}">Brouillons</a>
-                                </li>
-                                <li>
-                                    <a href="{{ path('ebook_blog_chapter_add')}}">Ajouter un chapitre</a>
-                                </li>
-
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
-                        <li><a href="{{ path('fos_user_profile_show') }}"><i class="fa fa-user fa-fw"></i>Mon compte</a></li>
-                        <li><a href="{{ path('fos_user_security_logout') }}"><i class="fa fa-sign-out fa-fw"></i> Se déconnecter</a></li>
                     </ul>
                 </div>
                 <!-- /.sidebar-collapse -->

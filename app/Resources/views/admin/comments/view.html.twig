@@ -10,7 +10,7 @@
         <!-- /.col-lg-12 -->
     </div>
 
-<h3>Chapitre {{ comment.chapter.getId() }}, Auteur: "{{ comment.author }}", le {{ comment.date|date('d/m/Y')  }} | Etat :
+<h3>Billet {{ comment.chapter.getId() }}, Auteur: "{{ comment.author }}", le {{ comment.date|date('d/m/Y')  }} | Etat :
     {% if comment.published %}
     Publié
     {% else %}

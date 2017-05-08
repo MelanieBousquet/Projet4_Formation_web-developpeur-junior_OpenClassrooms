@@ -26,6 +26,8 @@ class ChapterPdfController extends Controller {
         $html = $this->renderView('front/chapter/chapterToPdf.html.twig', array('chapter' => $chapter));
         /* call of the html2pdf service */
         $htmltopdf = new \Html2Pdf('P', 'A4', 'fr', array(100, 100, 100, 100));
+        $htmltopdf->pdf->AddFont('lora', 'regular', '14', 'false');
+        $htmltopdf->pdf->SetFont('lora');
 
         /* Take the view in order to convert it in pdf */
         $htmltopdf->writeHTML($html);

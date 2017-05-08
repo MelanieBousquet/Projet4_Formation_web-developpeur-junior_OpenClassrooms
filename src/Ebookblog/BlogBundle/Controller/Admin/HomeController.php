@@ -25,14 +25,14 @@ class HomeController extends Controller
         $listChapters = $repository
             ->getRepository('EbookBlogBundle:Chapter')
             ->findBy(
-                array('published' => 0)
+                array('published' => 0), array('date' => 'DESC')
             );
         $nbChapters = (int)count($listChapters);
 
         $listComments = $repository
             ->getRepository('EbookBlogBundle:Comment')
             ->findBy(
-                array('published' => 0)
+                array('published' => 0), array('date' => 'DESC')
         );
         $nbComments = (int)count($listComments);
 

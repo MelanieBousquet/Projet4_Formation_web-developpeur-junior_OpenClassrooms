@@ -31,11 +31,13 @@ class CommentController extends Controller
 
         if ($state == 'unpublished') {
             $listComments = $repository->findBy(
-                array('published' => 0)
+                array('published' => 0), array('date' => 'DESC')
         );
 
         } else {
-            $listComments = $repository->findAll();
+            $listComments = $repository->findBy(
+                array(), array('date' => 'DESC')
+            );
         }
 
        return $this->render('admin/comments/viewList.html.twig', array(
