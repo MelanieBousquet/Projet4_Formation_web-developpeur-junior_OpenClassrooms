@@ -28,7 +28,8 @@
         "symfony/twig-bridge": "~2.8|3.0.*",
         "symfony/asset": "~2.8|3.0.*",
         "friendsofsymfony/user-bundle": "dev-master",
-        "ensepar/html2pdf-bundle": "^3.0"
+        "ensepar/html2pdf-bundle": "^3.0",
+        "google/recaptcha": "~1.1"
 
     },
     "require-dev": {

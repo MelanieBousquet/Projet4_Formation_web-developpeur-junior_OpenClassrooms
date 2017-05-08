@@ -53,6 +53,7 @@
     <div class="form-group">
         {{ form_errors(form.content) }} {{ form_widget(form.content, { 'attr': { 'rows': '4', 'class': 'form-control', 'placeholder': 'Ecrivez votre commentaire' }}) }}
     </div>
+    <div class="g-recaptcha" data-sitekey="6LckfyAUAAAAAK9RVrkNEwJZXzkUyVEoJc1IXjzQ"></div>
 
 
     {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}, 'label': 'Envoyer'}) }} {# champ CSRF (géré automatiquement par Symfony !) #} {{ form_rest(form) }} {{ form_end(form) }} {% else %} {% endif %}

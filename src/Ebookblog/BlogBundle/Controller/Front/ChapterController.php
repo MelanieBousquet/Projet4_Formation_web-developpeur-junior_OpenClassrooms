@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use ReCaptcha\ReCaptcha;
 
 class ChapterController extends Controller {
 
@@ -21,44 +22,52 @@ class ChapterController extends Controller {
     public function viewAction($id, Request $request) {
         $em = $this->getDoctrine()->getManager();
 
-        $chapter = $em
-            ->getRepository('EbookBlogBundle:Chapter')
-            ->find($id)
-        ;
+        /* Chapter recuperation */
+        $chapter = $em->getRepository('EbookBlogBundle:Chapter')->find($id);
 
         if (null === $chapter) {
             throw new NotFoundHttpException("Le chapitre d'id ".$id." n'existe pas.");
         }
-
-        $comments = $em
-            ->getRepository('EbookBlogBundle:Comment')
-            ->findBy(
-            array('chapter' => $id, 'published' => 1)
-        );
+        /* Comments on the chapter Recuperation*/
+        $comments = $em->getRepository('EbookBlogBundle:Comment')->findBy(array('chapter' => $id, 'published' => 1), array('date' => 'DESC'));
 
         $comment = new Comment;
 
+        /* Creation of the Comment form */
         $form = $this->get('form.factory')->create(CommentType::class, $comment);
 
+        /* Test the validation of a user comment */
         if ($request->isMethod('POST') && $form-> handleRequest($request)->isValid()) {
+            /* Verification by Google reCaptcha */
+            $recaptcha = new ReCaptcha('6LckfyAUAAAAAEol6Et1tvBJmoaZ4a_nCxclg1cq');
+            $resp = $recaptcha->verify($request->request->get('g-recaptcha-response'), $request->getClientIp());
 
-            $em = $this->getDoctrine()->getManager();
-            $comment->setChapter($chapter);
-            $commentEmail = $comment->getEmail();
-            $url = 'https://www.gravatar.com/avatar/';
-            $url .= md5( strtolower( trim( $commentEmail ) ) );
-            $url .= "?s=80&d=mm&r=g";
-            $comment->setGravatar($url);
-            $em->persist($comment);
-            $em->flush();
+            if (!$resp->isSuccess()) {
+                // if the captcha submit wasn't valid : error message
+                foreach ($resp->getErrorCodes() as $code) { $error = ''; $error .= $code ; }
+                $message = "Le reCAPTCHA n'a pas fonctionné. Réessayez." . " (reCAPTCHA : " . $error . ")";
+                $request->getSession()->getFlashbag()->add('info', $message);
 
-            $request->getSession()->getFlashbag()->add('info', 'Commentaire bien enregistré, en attente de modération');
+            } else {
+                /* Success of the Google reCaptcha validation */
+                $em = $this->getDoctrine()->getManager();
+                $comment->setChapter($chapter);
+                $commentEmail = $comment->getEmail();
+                /* Creation of the Gravatar url */
+                $url = 'https://www.gravatar.com/avatar/';
+                $url .= md5( strtolower( trim( $commentEmail ) ) );
+                $url .= "?s=80&d=mm&r=g";
+                $comment->setGravatar($url);
+                /* Save the comment */
+                $em->persist($comment);
+                $em->flush();
 
-            return $this->redirectToRoute('ebook_blog_view', array('id' => $id));
+                $request->getSession()->getFlashbag()->add('info', 'Commentaire bien enregistré, en attente de modération');
+                return $this->redirectToRoute('ebook_blog_view', array('id' => $id));
+            }
         }
 
-
-        // Si on est pas en POST, alors on affiche le formulaire
+        // If we're not in POST, we render the form
         return $this->render('front/chapter/view.html.twig', array (
             'form' => $form->createView(),
             'chapter' => $chapter,
