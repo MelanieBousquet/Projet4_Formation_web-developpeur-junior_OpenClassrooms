@@ -5,6 +5,7 @@
 namespace Ebookblog\BlogBundle\Controller\Front;
 
 use Ebookblog\BlogBundle\Entity\Chapter;
+use Ebookblog\BlogBundle\Entity\ChapterRepository;
 use Ebookblog\BlogBundle\Entity\Comment;
 use Ebookblog\BlogBundle\Form\CommentType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -66,14 +67,53 @@ class ChapterController extends Controller {
                 return $this->redirectToRoute('ebook_blog_view', array('id' => $id));
             }
         }
+        $dateCurrentChapter = $chapter->getDate();
+        $prevChapter = $this->prevChapter($dateCurrentChapter);
+        $nextChapter = $this->nextChapter($dateCurrentChapter);
+
 
         // If we're not in POST, we render the form
         return $this->render('front/chapter/view.html.twig', array (
             'form' => $form->createView(),
             'chapter' => $chapter,
-            'comments' => $comments
+            'comments' => $comments,
+            'prevChapter' => $prevChapter,
+            'nextChapter' => $nextChapter
 
         ));
+    }
+
+    public function prevChapter($dateCurrentChapter) {
+        $qbPrev = $this
+            ->getDoctrine()
+            ->getRepository('EbookBlogBundle:Chapter')
+            ->createQueryBuilder('c')
+            ->where('c.date < :date')
+            ->setParameter('date', $dateCurrentChapter)
+            ->andWhere('c.published = ?1')
+            ->setParameter(1, 1)
+            ->orderBy('c.date', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getResult();
+        return $qbPrev;
+
+    }
+
+    public function nextChapter($dateCurrentChapter) {
+        $qbNext = $this
+            ->getDoctrine()
+            ->getRepository('EbookBlogBundle:Chapter')
+            ->createQueryBuilder('c')
+            ->where('c.date > :date')
+            ->setParameter('date', $dateCurrentChapter)
+            ->andWhere('c.published = ?1')
+            ->setParameter(1, 1)
+            ->orderBy('c.date', 'ASC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getResult();
+        return $qbNext;
     }
 
 }
