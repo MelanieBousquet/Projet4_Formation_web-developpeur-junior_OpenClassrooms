@@ -6,6 +6,16 @@
         p {
             font-family: Lora, serif;
         }
+        h2, h3 {
+            position: relative;
+            top: -120px;
+            margin-left: 20px;
+            color: white;
+            text-shadow:  2px 2px black;
+        }
+        p {
+            text-align: justify;
+        }
 
     </style>
 </head>
@@ -16,7 +26,8 @@
 
 
 <div>
-    <div class="col-md-10">
+    <div class="col-md-10 header">
+       <img src="http://localhost/ebookblog/web/img/aurora-borealis.jpg" width="750" height="250"/>
         <h2>{{ chapter.title }}</h2>
         <h3>{{ chapter.subtitle }}</h3>
     </div>

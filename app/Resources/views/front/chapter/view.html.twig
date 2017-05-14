@@ -57,11 +57,11 @@
     {% for comment in comments %}
     <div class="post-preview row">
         {% if comment.gravatar %}
-        <div class="col-xs-2">
+        <div class="col-sm-2 col-xs-4">
             <img src="{{ comment.gravatar }}" alt="gravatar" style="margin-top:15px;" />
         </div>
         {% endif %}
-        <div class="col-xs-10">
+        <div class="col-sm-10 col-xs-8">
             <h3 class="post-title">{{ comment.author }}, le {{ comment.date|date('d/m/Y') }} </h3>
             <p class="post-meta"> {{ comment.content }}</p>
         </div>
