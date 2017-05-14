@@ -7,6 +7,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <!-- Open Graph Tags for Facebook -->
+
+    <meta property="og:type"          content="website" />
+    <meta property="og:title"         content="Blog de Jean Forteroche" />
+    <meta property="og:description"   content="Découvrez le nouveau roman de Jean Forteroche en ligne, 'Billet simple pour l'Alaska', chapitre par chapitre" />
+    <meta property="og:image"         content="url( {{asset('img/aurora-borealis.jpg')}})" />
+
+
 <title>{% block title %}Blog de Jean Forteroche{% endblock %}</title>
 
 
@@ -33,6 +41,15 @@
 </head>
 
 <body>
+   <!-- Load Facebook SDK for JavaScript -->
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v2.9";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 
    {{ getChapters()|raw }}
 
