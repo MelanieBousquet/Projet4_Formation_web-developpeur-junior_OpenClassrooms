@@ -1,0 +1,36 @@
+
+{% extends 'front/layout.html.twig' %}
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block title %}{{ parent() }} Mot de passe oublié -{% endblock %}
+
+{% block header %}
+    <header class="intro-header" style="background-image: url( {{asset('img/home-bg.jpg')}})">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="site-heading">
+                        <h1>Mot de passe oublié ?</h1>
+                        <hr class="small">
+                        <span class="subheading">Réinitialisation mot de passe</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    {% for key, messages in app.session.flashbag.all() %}
+    {% for message in messages %}
+      <div class="alert alert-{{ key }}">
+        {{ message|trans({}, 'FOSUserBundle') }}
+      </div>
+    {% endfor %}
+  {% endfor %}
+{% endblock %}
+
+{% block body %}
+{% block fos_user_content %}
+<p>
+{{ 'resetting.check_email'|trans({'%tokenLifetime%': tokenLifetime})|nl2br }}
+</p>
+{% endblock %}
+{% endblock %}

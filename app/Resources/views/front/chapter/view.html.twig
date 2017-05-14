@@ -22,8 +22,9 @@
     </div>
 
     {{ chapter.content | raw }}
-    {% if prevChapter %}
     <div style="display:flex; justify-content:space-around; flex-wrap:wrap; margin: 30px 0">
+    {% if prevChapter %}
+
     <div><button class="btn btn-success"><a href="{{ path('ebook_blog_view', {'id': prevChapter.0.id})}}" style="color:white;">Chapitre précédent</a></button></div>
     {% endif %}
 
@@ -31,7 +32,10 @@
     <div><button class="btn btn-success"><a href="{{ path('ebook_blog_view', {'id': nextChapter.0.id})}}" style="color:white;">Chapitre suivant</a></button></div>
     {% endif %}
     </div>
+
+
     {% if comments %}
+
     <h2>Commentaires</h2>
     {% for comment in comments %}
     <div class="post-preview row">
@@ -46,16 +50,20 @@
         </div>
 
     </div>
+
     {% endfor %} {% else %}
-    <div>Pas de commentaires</div>
-    {% endif %} {% for flashMessage in app.session.flashbag.get('info') %}
+    <div class="post-preview row">Pas de commentaires</div>
+    {% endif %}
+
+    {% for flashMessage in app.session.flashbag.get('info') %}
     <div class="alert alert-success">
         {{ flashMessage }}
     </div>
     {% endfor %}
 
     <h3>Ajouter un commentaire</h3>
-    {% if form %} {{ form_start(form) }}
+    {% if form %}
+    {{ form_start(form) }}
     <div class="form-group">
         {{ form_errors(form.author) }} {{ form_widget(form.author, { 'attr': { 'rows': '4', 'class': 'form-control', 'placeholder': 'Votre pseudo' }}) }}
     </div>
@@ -68,7 +76,9 @@
     <div class="g-recaptcha" data-sitekey="6LckfyAUAAAAAK9RVrkNEwJZXzkUyVEoJc1IXjzQ"></div>
 
 
-    {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}, 'label': 'Envoyer'}) }} {# champ CSRF (géré automatiquement par Symfony !) #} {{ form_rest(form) }} {{ form_end(form) }} {% else %} {% endif %}
+    {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}, 'label': 'Envoyer'}) }} {# champ CSRF (géré automatiquement par Symfony !) #} {{ form_rest(form) }} {{ form_end(form) }}
+     {% endif %}
+
 </article>
 
 {% endblock %}
