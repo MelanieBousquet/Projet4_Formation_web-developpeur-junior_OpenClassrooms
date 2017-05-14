@@ -1,4 +1,15 @@
-{% extends 'front/layout.html.twig' %} {% block title %} Lecture d'un chapitre {% endblock %} {% block header %}
+{% extends 'front/layout.html.twig' %}
+
+
+{% block OG %}
+<!-- Open Graph Tags for Facebook -->
+<meta property="og:type"          content="website" />
+<meta property="og:title"         content="Blog de Jean Forteroche" />
+<meta property="og:description"   content="Découvrez le {{chapter.subtitle}} du nouveau roman de Jean Forteroche en ligne, 'Billet simple pour l'Alaska'" />
+<meta property="og:image:url"     content="http://projet4.melanie-bousquet.fr/img/aurora-borealis.jpg" />
+{% endblock %}
+
+{% block title %} Lecture d'un chapitre {% endblock %} {% block header %}
 <!-- Page Header -->
 <!-- Set your background image for this header on the line below. -->
 <header class="intro-header" style="background: url( {{asset('img/aurora-borealis.jpg')}}) bottom no-repeat ">
@@ -9,6 +20,11 @@
                     <h1>{{ chapter.title }}</h1>
                     <h2 class="subheading">{{ chapter.subtitle }}</h2>
                     <span class="meta">Par Jean Forteroche, le {{ chapter.date|date('d/m/Y') }} {% if chapter.date|date('d/m/Y') != chapter.updatedAt|date('d/m/Y') %} , mis à jour le {{ chapter.updatedAt|date('d/m/Y')}} {% endif %}</span>
+                       <div class="fb-share-button" data-href="http://www.projet4.melanie-bousquet.fr/chapter/{{ chapter.id }}" data-layout="button" data-size="large" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.projet4.melanie-bousquet.fr%2F&amp;src=sdkpreparse">Partager</a></div>
+                    <div style="margin-top:5px;"><a class="twitter-share-button"
+  href="https://twitter.com/intent/tweet?text=Le%20nouveau%20chapitre%20du%20roman%20de%20Jean%20Forteroche"
+  data-size="large">
+    Tweet</a></div>
                 </div>
             </div>
         </div>
@@ -19,6 +35,7 @@
 <article>
   <div class="col-xs-12 text-center">
    <a style="margin-bottom: 20px;" class="btn btn-primary" href="{{ path('ebook_blog_chapterpdf', {'id': chapter.id}) }}">Lire en PDF</a><br/>
+
     </div>
 
     {{ chapter.content | raw }}
