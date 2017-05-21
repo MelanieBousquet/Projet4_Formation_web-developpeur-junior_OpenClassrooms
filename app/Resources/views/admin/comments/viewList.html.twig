@@ -11,54 +11,52 @@
         <!-- /.col-lg-12 -->
     </div>
 
-{% for flashMessage in app.session.flashbag.get('info') %}
-<div class="alert alert-success">
-    {{ flashMessage }}
-</div>
-{% endfor %}
+    {% for flashMessage in app.session.flashbag.get('info') %}
+    <div class="alert alert-success">
+        {{ flashMessage }}
+    </div>
+    {% endfor %}
 
 
-        {% if listComments %}
-        <div class="table-responsive">
-            <table class="table table-hover table-condensed">
-                <thead>
-                    <tr>
-                        <th>Chapitre</th>
-                        <th>Date</th>
-                        <th>Auteur</th>
-                        <th>Email</th>
-                        <th>Contenu</th>
-                        <th>Statut</th>
-                        <th></th>  <!-- Actions column -->
-                    </tr>
-                </thead>
-                {% for comment in listComments %}
+    {% if listComments %}
+    <div class="table-responsive">
+        <table class="table table-hover table-condensed">
+            <thead>
                 <tr>
-                    <td>{{ comment.chapter.getId() }}</td>
-                    <td>{{ comment.date|date('d/m/Y')  }}</td>
-                    <td>{{ comment.author }}</td>
-                    <td>{{ comment.email }}</td>
-                    <td>{{ comment.content | truncate(60) }}</td>
-                    <td>
-                        {% if comment.published %}
-                        Publié
-                        {% else %}
-                        En attente de modération
-                        {% endif %}
-                    </td>
-                    <td>
-                        <a class="chapterTitle" href="{{ path('ebook_blog_comment', { 'id': comment.id }) }}"><button class="btn btn-primary">Modérer</button></a>
-                    </td>
-
+                    <th>Chapitre</th>
+                    <th>Date</th>
+                    <th>Auteur</th>
+                    <th>Email</th>
+                    <th>Contenu</th>
+                    <th>Statut</th>
+                    <th></th>  <!-- Actions column -->
                 </tr>
-                {% endfor %}
-            </table>
-        </div>
-        {% else %}
-        <div class="alert alert-warning">Pas de commentaire.</div>
-        {% endif %}
+            </thead>
+            {% for comment in listComments %}
+            <tr>
+                <td>{{ comment.chapter.getId() }}</td>
+                <td>{{ comment.date|date('d/m/Y')  }}</td>
+                <td>{{ comment.author }}</td>
+                <td>{{ comment.email }}</td>
+                <td>{{ comment.content | truncate(60) }}</td>
+                <td>
+                    {% if comment.published %}
+                    Publié
+                    {% else %}
+                    En attente de modération
+                    {% endif %}
+                </td>
+                <td>
+                    <a class="chapterTitle" href="{{ path('ebook_blog_comment', { 'id': comment.id }) }}"><button class="btn btn-primary">Modérer</button></a>
+                </td>
 
-
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    {% else %}
+    <div class="alert alert-warning">Pas de commentaire.</div>
+    {% endif %}
 
 </div>
 <!-- /#page-wrapper -->

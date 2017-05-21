@@ -15,13 +15,13 @@
     <meta property="og:image:url"     content="http://projet4.melanie-bousquet.fr/img/aurora-borealis.jpg" />
     {% endblock %}
 
-<title>{% block title %}Blog de Jean Forteroche{% endblock %}</title>
+    <title>{% block title %}Blog de Jean Forteroche{% endblock %}</title>
 
 
-  {% block stylesheets %}
+    {% block stylesheets %}
     {# On charge le CSS de bootstrap depuis le site directement #}
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-  {% endblock %}
+    {% endblock %}
 
     <!-- Theme CSS -->
     <link href="{{ asset('css/clean-blog.css') }}" rel="stylesheet">
@@ -41,32 +41,37 @@
 </head>
 
 <body>
-   <!-- Load Facebook SDK for JavaScript -->
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v2.9";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
+    <!-- Load Facebook SDK for JavaScript -->
+    <div id="fb-root"></div>
+    <script>
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v2.9";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
 
-<script>window.twttr = (function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0],
-    t = window.twttr || {};
-  if (d.getElementById(id)) return t;
-  js = d.createElement(s);
-  js.id = id;
-  js.src = "https://platform.twitter.com/widgets.js";
-  fjs.parentNode.insertBefore(js, fjs);
+   <!-- Load Twitter SDK for JavaScript -->
+    <script>
+        window.twttr = (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0],
+            t = window.twttr || {};
+            if (d.getElementById(id)) return t;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "https://platform.twitter.com/widgets.js";
+            fjs.parentNode.insertBefore(js, fjs);
 
-  t._e = [];
-  t.ready = function(f) {
-    t._e.push(f);
-  };
+            t._e = [];
+            t.ready = function(f) {
+            t._e.push(f);
+            };
 
-  return t;
-}(document, "script", "twitter-wjs"));</script>
+            return t;
+        }(document, "script", "twitter-wjs"));
+    </script>
 
    {{ getChapters()|raw }}
 

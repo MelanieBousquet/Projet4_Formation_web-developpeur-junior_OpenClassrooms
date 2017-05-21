@@ -10,74 +10,48 @@
         <!-- /.col-lg-12 -->
     </div>
 
-{% for flashMessage in app.session.flashbag.get('info') %}
-<div class="alert alert-success">
-    {{ flashMessage }}
-</div>
-{% endfor %}
+    {% for flashMessage in app.session.flashbag.get('info') %}
+    <div class="alert alert-success">
+        {{ flashMessage }}
+    </div>
+    {% endfor %}
 
 
-        {% if listChapters %}
-        <div class="table-responsive">
-            <table class="table table-hover table-condensed">
-                <thead>
-                    <tr>
-                        <th></th> <!-- Subtitle column -->
-                        <th>Titre</th>
-                        <th>Contenu</th>
-                        <th>Statut</th>
-                        <th></th>  <!-- Actions column -->
-                    </tr>
-                </thead>
-                {% for chapter in listChapters %}
+    {% if listChapters %}
+    <div class="table-responsive">
+        <table class="table table-hover table-condensed">
+            <thead>
                 <tr>
-                    <td>{{ chapter.subtitle }}</td>
-                    <td><a class="chapterTitle" href="{{ path('ebook_blog_chapter_edit', { 'id': chapter.id }) }}">{{ chapter.title }}</a></td>
-                    <td>{{ chapter.content | truncate(60) | raw }}</td>
-                    <td>
-                        {% if chapter.published %}
-                        Publié
-                        {% else %}
-                        Brouillon
-                        {% endif %}
-                    </td>
-                    <td>
-                        <a href="{{ path('ebook_blog_chapter_edit', { 'id': chapter.id }) }}" class="btn btn-info btn-xs" title="Editer"><span class="glyphicon glyphicon-edit"></span></a>
-                        <a href="{{ path('ebook_blog_chapter_delete', { 'id': chapter.id }) }}" class="btn btn-danger btn-xs" title="Supprimer"><span class="glyphicon glyphicon-remove"></span></a>
-                    </td>
+                    <th></th> <!-- Subtitle column -->
+                    <th>Titre</th>
+                    <th>Contenu</th>
+                    <th>Statut</th>
+                    <th></th>  <!-- Actions column -->
                 </tr>
-                {% endfor %}
-            </table>
-        </div>
-        {% else %}
-        <div class="alert alert-warning">Pas de billet trouvé.</div>
-        {% endif %}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            </thead>
+            {% for chapter in listChapters %}
+            <tr>
+                <td>{{ chapter.subtitle }}</td>
+                <td><a class="chapterTitle" href="{{ path('ebook_blog_chapter_edit', { 'id': chapter.id }) }}">{{ chapter.title }}</a></td>
+                <td>{{ chapter.content | truncate(60) | raw }}</td>
+                <td>
+                    {% if chapter.published %}
+                    Publié
+                    {% else %}
+                    Brouillon
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{{ path('ebook_blog_chapter_edit', { 'id': chapter.id }) }}" class="btn btn-info btn-xs" title="Editer"><span class="glyphicon glyphicon-edit"></span></a>
+                    <a href="{{ path('ebook_blog_chapter_delete', { 'id': chapter.id }) }}" class="btn btn-danger btn-xs" title="Supprimer"><span class="glyphicon glyphicon-remove"></span></a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    {% else %}
+    <div class="alert alert-warning">Pas de billet trouvé.</div>
+    {% endif %}
 
 </div>
 <!-- /#page-wrapper -->
